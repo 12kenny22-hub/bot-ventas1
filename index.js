@@ -35,7 +35,8 @@ const DATOS_PAGO = {
   },
 
   upsell: {
-    bolivares: 1750
+    nombre: "Pack Complementario KETO 28D™",
+    precioBolivares: 1750
   }
 };
 
@@ -44,8 +45,7 @@ const DATOS_PAGO = {
 // ==========================================================
 
 const SYSTEM_PROMPT = `
-Eres Valentina Rojas, asesora de atención de
-Keto sin Complicaciones.
+Eres Valentina Rojas, asesora de Keto sin Complicaciones.
 
 Tu trabajo es responder dudas por WhatsApp sobre
 Método KETO 28D™.
@@ -59,7 +59,7 @@ REGLAS DE ESTILO:
 
 - Responde en español.
 - Utiliza párrafos cortos.
-- Deja una línea en blanco entre ideas.
+- Deja una línea en blanco entre ideas cuando sea útil.
 - Usa emojis con moderación.
 - Evita bloques largos de texto.
 - No repitas información innecesariamente.
@@ -70,38 +70,35 @@ REGLAS DE ESTILO:
 - No inventes enlaces, promociones, cuentas ni información.
 - No inventes productos.
 - No inventes precios.
-- No inventes beneficios.
-- No inventes garantías.
 - No inventes métodos de pago.
-- No inventes condiciones de entrega.
+- No inventes garantías.
 - No inventes resultados.
+- No inventes condiciones de entrega.
 - No hagas promesas médicas.
-- No digas espontáneamente que eres una inteligencia artificial,
-  un bot o un agente automatizado.
+- No digas espontáneamente que eres una inteligencia artificial.
 - Si la persona pregunta directamente si la atención es automatizada,
   responde con transparencia.
 - No presiones a la persona para pagar.
-- Cuando respondas una pregunta concreta, no repitas todo el
-  discurso de venta.
-- Contesta únicamente lo necesario de manera clara, amable,
-  ordenada y visual.
-- Si no tienes información suficiente para responder algo,
-  indica de forma natural que necesitas confirmar ese dato
-  con el equipo.
-- Utiliza únicamente la información oficial proporcionada
-  en esta base de conocimiento.
+- No menciones pago ni comprobante si la persona solo está saludando.
+- No repitas el discurso de venta completo cuando la persona
+  hace una pregunta concreta.
+- Utiliza únicamente la información oficial de esta base.
+- Si no tienes información suficiente, indica de manera natural
+  que necesitas confirmar ese dato con el equipo.
 
 INFORMACIÓN OFICIAL DEL NEGOCIO:
 
-El producto principal es un producto digital llamado:
+El producto principal es:
 
 Método KETO 28D™
 
-Es una ruta práctica organizada durante 28 días
+Es un producto 100% digital.
+
+Está estructurado como una ruta práctica de 28 días
 para ayudar a la persona a organizar mejor su alimentación,
 tener más variedad en sus comidas,
 reducir la improvisación diaria
-y desarrollar hábitos más sostenibles.
+y trabajar hábitos más sostenibles.
 
 El cliente recibe:
 
@@ -120,17 +117,17 @@ más 9 regalos digitales:
 9. Guía y Cuaderno Práctico para llevar el control
    del progreso Keto 28D
 
-El precio oficial es:
+PRECIO OFICIAL:
 
 - Bs. 4.450 por Pago Móvil.
 - 3.5 USDT por Binance.
 
-La persona puede realizar su pago mediante:
+MÉTODOS DE PAGO:
 
 - Pago Móvil.
 - Binance.
 
-DATOS PARA PAGO MÓVIL:
+DATOS DE PAGO MÓVIL:
 
 Banco: Banco de Venezuela
 Código: 0102
@@ -138,77 +135,53 @@ Titular: Kenny Barico
 C.I.: 20.110.298
 Teléfono: 0412-8319767
 
-DATOS PARA BINANCE:
+DATOS DE BINANCE:
 
 Binance ID: 1125063516
 Monto: 3.5 USDT
 
-También existe un código QR de Binance que se utiliza
-dentro del flujo de WhatsApp.
+También existe un código QR de Binance
+que se utiliza dentro del flujo de WhatsApp.
 
-Nunca inventes un código QR diferente.
+Nunca inventes un QR diferente.
 
 ENTREGA:
 
 Método KETO 28D™ es 100% digital.
 
-Después de realizar el pago,
-la persona debe enviar su comprobante
-por este mismo WhatsApp.
+Una vez que la persona realiza el pago
+y envía el comprobante,
+se valida la compra.
 
-Una vez confirmado el pago,
+Después de la validación,
 el acceso se libera de inmediato.
 
-El contenido se entrega mediante un enlace de Google Drive.
+El contenido se entrega mediante
+un enlace de Google Drive enviado por WhatsApp.
 
-El cliente puede acceder desde su teléfono,
+Puede utilizarse desde teléfono,
 tablet o computadora.
+
+ACCESO:
 
 El acceso es de por vida.
 
 Los 28 días corresponden a la estructura del método,
-no al tiempo durante el cual el cliente puede utilizarlo.
+no al tiempo de acceso.
 
-SALUD Y RESULTADOS:
-
-Método KETO 28D™ puede ayudar a la persona a organizar
-mejor su alimentación, tener mayor variedad,
-desarrollar hábitos más conscientes
-y apoyar objetivos relacionados con control de peso.
-
-Los resultados pueden variar de una persona a otra.
-
-Nunca prometas:
-
-- Una cantidad específica de kilos.
-- Resultados garantizados.
-- Resultados médicos.
-- Curación de enfermedades.
-- Control de enfermedades.
-- Reversión de diabetes.
-- Reversión de hipertensión.
-- Sustitución de medicamentos o tratamientos.
-
-Si una persona menciona diabetes,
-hipertensión,
-insulina,
-medicamentos
-o alguna condición diagnosticada,
-explica de manera natural que puede utilizar
-el método como una guía práctica de apoyo,
-pero que cualquier cambio importante en su alimentación
-debe adaptarlo junto al profesional de salud
-que conoce su caso.
+Después de completar los 28 días,
+el cliente puede seguir consultando las recetas,
+guías y materiales cuando lo necesite.
 
 PRINCIPIANTES:
 
 No es necesario tener experiencia previa.
 
-Método KETO 28D™ está diseñado para que una persona
-pueda comenzar aunque nunca haya seguido este tipo
-de alimentación.
+Método KETO 28D™ está pensado para que una persona
+pueda comenzar aunque nunca haya seguido
+este tipo de alimentación.
 
-Dentro de los regalos se incluyen:
+Dentro de sus regalos tiene:
 
 Cómo Empezar Keto
 
@@ -216,65 +189,91 @@ y
 
 Keto para Principiantes.
 
-ACCESO:
+SALUD Y RESULTADOS:
 
-El acceso es de por vida.
+Método KETO 28D™ puede apoyar una mejor organización
+de la alimentación,
+la construcción de hábitos más conscientes
+y objetivos relacionados con el control de peso.
 
-Después de terminar los 28 días,
-la persona puede seguir consultando,
-repitiendo recetas
-y utilizando todas las guías cuando lo necesite.
+Los resultados varían de una persona a otra.
+
+Nunca prometas:
+
+- kilos específicos
+- resultados garantizados
+- resultados médicos
+- curación de enfermedades
+- reversión de enfermedades
+- sustitución de tratamientos
+- sustitución de medicamentos
+
+Si una persona menciona:
+
+- diabetes
+- hipertensión
+- insulina
+- medicamentos
+- tratamiento
+- alguna condición diagnosticada
+
+explica de forma natural que puede utilizar
+el método como una guía práctica de apoyo,
+pero que cualquier cambio importante en su alimentación
+debería adaptarlo junto con el profesional de salud
+que conoce su caso.
 
 SOPORTE:
 
 Si la persona ya realizó el pago
-pero todavía no recibió su producto,
+pero todavía no recibió su acceso,
 puede existir un pequeño retraso
 de conexión o validación.
 
-En ese caso debe responder con la palabra:
+En ese caso debe responder:
 
 LISTO
 
 para llevar el caso a revisión manual.
 
-No debe realizar un segundo pago.
+No debe realizar otro pago.
 
 PACK COMPLEMENTARIO:
 
-Después de adquirir Método KETO 28D™
+Después de adquirir el producto principal
 existe un complemento opcional llamado:
 
 Pack Complementario KETO 28D™
 
 Incluye exactamente:
 
-- Complemento Método KETO 28D™
-- Salsas y Postres KETO 28D™
+1. Complemento Método KETO 28D™
+2. Salsas y Postres KETO 28D™
 
-Los dos se venden juntos como un solo pack.
+Los dos se venden juntos en un solo pack.
 
 Precio:
 
 Bs. 1.750
 
-Este pack es opcional.
+Este complemento es opcional.
 
 No es necesario adquirirlo para recibir
 Método KETO 28D™ ni los 9 regalos.
 
-No existe todavía un precio oficial confirmado
-en USDT para este complemento.
+No existe un precio oficial confirmado en USDT
+para el Pack Complementario.
 
-Si alguien pregunta su precio por Binance,
-indica que ese dato debe confirmarse con el equipo.
+Si preguntan el precio del complemento por Binance,
+indica que necesitas confirmar ese dato con el equipo.
 
-OBJETIVO DE LA CONVERSACIÓN:
+OBJETIVO:
 
-Primero responde la duda real de la persona.
+Primero responde la duda real del cliente.
 
 Cuando exista intención clara de compra,
-dirige naturalmente a elegir entre:
+puedes dirigir naturalmente a la persona
+a elegir entre:
 
 Pago Móvil
 
@@ -282,18 +281,17 @@ o
 
 Binance.
 
-No agregues mensajes de pago
-cuando la persona solamente está saludando.
+No agregues una invitación de pago
+a todas las respuestas.
 
 No pidas comprobante
-si la persona todavía no ha indicado
-que realizó el pago.
+si la persona todavía no ha realizado el pago.
 
 Si ya eligió Pago Móvil,
-envía únicamente los datos de Pago Móvil.
+envía solamente los datos de Pago Móvil.
 
 Si ya eligió Binance,
-envía únicamente los datos de Binance.
+envía solamente los datos de Binance.
 `;
 
 // ==========================================================
@@ -336,7 +334,7 @@ function limpiarRespuesta(valor) {
 
 function cierrePago() {
   return [
-    "🥑 Puedes adquirir Método KETO 28D™ mediante:",
+    "🥑 Para adquirir Método KETO 28D™ puedes elegir:",
     "",
     "📲 Pago Móvil",
     "🟡 Binance",
@@ -345,11 +343,33 @@ function cierrePago() {
   ].join("\n");
 }
 
-function agregarCierre(respuesta) {
-  const respuestaLimpia = limpiarRespuesta(respuesta);
+function agregarCierre(respuesta, mensajeOriginal = "") {
+  const respuestaLimpia =
+    limpiarRespuesta(respuesta);
 
   if (!respuestaLimpia) {
-    return cierrePago();
+    return respuestaLimpia;
+  }
+
+  const texto =
+    normalizarTexto(mensajeOriginal);
+
+  const intencionCompra =
+    contieneAlguna(texto, [
+      "quiero comprar",
+      "quiero adquirir",
+      "quiero el metodo",
+      "quiero el megapack",
+      "me interesa comprar",
+      "como compro",
+      "como comprar",
+      "quiero pagarlo",
+      "lo quiero",
+      "deseo comprar"
+    ]);
+
+  if (!intencionCompra) {
+    return respuestaLimpia;
   }
 
   const normalizada =
@@ -371,7 +391,7 @@ function agregarCierre(respuesta) {
 
 function respuestaCuenta() {
   return [
-    "Claro 😊 Estos son los datos para realizar tu Pago Móvil:",
+    "Perfecto 😊 Estos son los datos para realizar tu Pago Móvil:",
     "",
     `🏦 Banco: ${DATOS_PAGO.banco}`,
     `🔢 Código: ${DATOS_PAGO.codigo}`,
@@ -391,20 +411,20 @@ function respuestaPagoPosterior() {
   return [
     "Claro 😊 No hay problema.",
     "",
-    "Cuando estés listo para continuar con tu compra, puedes escribirnos nuevamente por este mismo WhatsApp.",
+    "Cuando quieras continuar con tu compra, puedes escribirnos nuevamente por este mismo WhatsApp.",
     "",
-    `El valor de Método KETO 28D™ + los 9 regalos es Bs. ${DATOS_PAGO.precio.bolivares.toLocaleString("es-VE")} o ${DATOS_PAGO.precio.binance} por Binance. 🥑💚`
+    `Método KETO 28D™ + los 9 regalos tiene un valor de Bs. ${DATOS_PAGO.precio.bolivares.toLocaleString("es-VE")} o ${DATOS_PAGO.precio.binance} por Binance. 🥑💚`
   ].join("\n");
 }
 
 function respuestaOxxo() {
   return [
-    "Claro 😊 También puedes realizar tu pago mediante Binance.",
+    "Perfecto 💛 Puedes realizar tu pago por Binance:",
     "",
     `💰 Monto: ${DATOS_PAGO.binance.monto}`,
     `🟡 Binance ID: ${DATOS_PAGO.binance.id}`,
     "",
-    "También puedes escanear el código QR de Binance que te mostramos dentro del flujo 📲",
+    "También puedes utilizar el código QR de Binance que aparece dentro del flujo 📲",
     "",
     "Cuando termines, envíame aquí la imagen del comprobante.",
     "",
@@ -414,11 +434,9 @@ function respuestaOxxo() {
 
 function respuestaReligion() {
   return [
-    "Método KETO 28D™ está diseñado para ayudarte a organizar mejor tu alimentación durante 28 días 🥑💚",
+    "Método KETO 28D™ es una ruta práctica de 28 días pensada para ayudarte a organizar mejor tus comidas, tener más variedad y reducir la improvisación diaria 🥑💚",
     "",
-    "Incluye recetas, ideas prácticas, orientación y recursos para que tengas más variedad y no tengas que improvisar cada día.",
-    "",
-    "Además recibes 9 regalos digitales que complementan el método."
+    "Además del método principal, recibes 9 regalos digitales con recetas, guías y recursos que complementan tu proceso."
   ].join("\n");
 }
 
@@ -428,7 +446,7 @@ function respuestaEntrega() {
     "",
     "Una vez realizado y confirmado el pago, recibes de inmediato por este mismo WhatsApp un enlace de Google Drive.",
     "",
-    "Desde allí podrás acceder al Método KETO 28D™ completo + tus 9 regalos digitales desde tu teléfono, tablet o computadora. 🥑💚"
+    "Desde allí podrás acceder al Método KETO 28D™ completo + tus 9 regalos desde tu teléfono, tablet o computadora. 🥑💚"
   ].join("\n");
 }
 
@@ -442,132 +460,6 @@ function respuestaPrecio() {
     "Todo es 100% digital y el acceso es de por vida. 💚",
     "",
     cierrePago()
-  ].join("\n");
-}
-
-// ==========================================================
-// RESPUESTAS ADICIONALES DE LA BASE DE CONOCIMIENTO
-// ==========================================================
-
-function respuestaSaludo() {
-  return elegirAleatoria([
-    "¡Hola! 😊 Qué gusto saludarte. ¿En qué puedo ayudarte con Método KETO 28D™? 🥑",
-    "¡Hola! 👋💚 Claro, estoy aquí para ayudarte. ¿Qué deseas saber sobre Método KETO 28D™?",
-    "¡Hola! 😊 Cuéntame, ¿qué deseas saber sobre Método KETO 28D™?"
-  ]);
-}
-
-function respuestaCompra() {
-  return [
-    "Claro 😊",
-    "",
-    "Puedes adquirir Método KETO 28D™ completo + los 9 regalos digitales por:",
-    "",
-    `📲 Bs. ${DATOS_PAGO.precio.bolivares.toLocaleString("es-VE")} por Pago Móvil`,
-    `🟡 ${DATOS_PAGO.precio.binance} por Binance`,
-    "",
-    "Todo es 100% digital y se entrega inmediatamente después de confirmar el pago.",
-    "",
-    "¿Prefieres Pago Móvil o Binance? 🥑💚"
-  ].join("\n");
-}
-
-function respuestaContenido() {
-  return [
-    "Al adquirir Método KETO 28D™ recibes el método principal completo y además 9 regalos digitales 🎁:",
-    "",
-    "🎁 11 Recetas Keto",
-    "🎁 Cómo Empezar Keto",
-    "🎁 Keto Postres",
-    "🎁 Dieta Keto 2026",
-    "🎁 Recetario Keto Entre Amigos",
-    "🎁 Keto para Principiantes",
-    "🎁 Estrategia y Hábitos",
-    "🎁 Fin de Semana Keto Parrilla",
-    "🎁 Guía y Cuaderno Práctico para llevar el control del progreso Keto 28D",
-    "",
-    "La idea es que tengas más recetas, variedad, orientación y herramientas prácticas para acompañarte durante todo el proceso. 🥑💚"
-  ].join("\n");
-}
-
-function respuestaTiempoEntrega() {
-  return [
-    "La entrega es inmediata 😊",
-    "",
-    "Una vez que realizas el pago, envías el comprobante y confirmamos la compra, recibes por WhatsApp el enlace de Google Drive con Método KETO 28D™ + tus 9 regalos."
-  ].join("\n");
-}
-
-function respuestaAccesoVida() {
-  return [
-    "Sí 😊 El acceso es de por vida.",
-    "",
-    "Los 28 días corresponden a la estructura del método, pero todo el material queda contigo para que puedas volver a consultar recetas, guías y recursos cuando lo necesites. 🥑💚"
-  ].join("\n");
-}
-
-function respuestaPrincipiante() {
-  return [
-    "No necesitas experiencia previa 😊",
-    "",
-    "Método KETO 28D™ está pensado para que puedas comenzar aunque nunca hayas seguido este tipo de alimentación.",
-    "",
-    "Además, dentro de tus regalos tienes Cómo Empezar Keto y Keto para Principiantes para ayudarte desde el inicio. 🥑💚"
-  ].join("\n");
-}
-
-function respuestaSaludPeso() {
-  return [
-    "Método KETO 28D™ puede ayudarte a organizar mejor tu alimentación y apoyar objetivos relacionados con el control de peso y la adopción de hábitos más saludables. 🥑💚",
-    "",
-    "Los resultados pueden variar de una persona a otra, por eso no prometemos una cantidad específica de kilos ni resultados médicos."
-  ].join("\n");
-}
-
-function respuestaCondicionSalud() {
-  return [
-    "Claro 😊 Puedes utilizar Método KETO 28D™ como una guía práctica para organizar mejor tus comidas, incorporar nuevas recetas y trabajar hábitos de alimentación de forma más consciente.",
-    "",
-    "Si tienes diabetes, hipertensión, utilizas insulina, medicamentos o tienes alguna condición diagnosticada, lo recomendable es adaptar cualquier cambio importante en tu alimentación junto al profesional de salud que conoce tu caso. 💚"
-  ].join("\n");
-}
-
-function respuestaNoRecibio() {
-  return [
-    "No te preocupes 😊",
-    "",
-    "Si ya realizaste el pago y todavía no recibes tu acceso, puede tratarse de un pequeño retraso de conexión o validación.",
-    "",
-    "Responde con la palabra LISTO para que podamos revisar manualmente tu comprobante y ayudarte a liberar el acceso.",
-    "",
-    "No necesitas volver a pagar. 💚"
-  ].join("\n");
-}
-
-function respuestaListo() {
-  return [
-    "Perfecto 😊",
-    "",
-    "Vamos a revisar manualmente tu comprobante y verificar la liberación de tu acceso.",
-    "",
-    "Si todavía no has enviado la imagen del comprobante, déjala por este mismo chat. 💚"
-  ].join("\n");
-}
-
-function respuestaUpsell() {
-  return [
-    "Sí 😊 Después de adquirir Método KETO 28D™ existe un complemento opcional:",
-    "",
-    "🔥 Pack Complementario KETO 28D™",
-    "",
-    "Incluye los 2 complementos juntos:",
-    "",
-    "🍽️ Complemento Método KETO 28D™",
-    "🍰 Salsas y Postres KETO 28D™",
-    "",
-    `💰 Precio: Bs. ${DATOS_PAGO.upsell.bolivares.toLocaleString("es-VE")}`,
-    "",
-    "Es totalmente opcional y no afecta tu acceso al método principal ni a tus 9 regalos. 💚"
   ].join("\n");
 }
 
@@ -597,20 +489,29 @@ function respuestaDirecta(mensajeOriginal) {
     texto === "buenas noches";
 
   if (preguntaSaludo) {
-    return respuestaSaludo();
+    return elegirAleatoria([
+      "¡Hola! 😊 Qué gusto saludarte. ¿En qué puedo ayudarte con Método KETO 28D™? 🥑",
+      "¡Hola! 👋💚 Claro, estoy aquí para ayudarte. ¿Qué deseas saber sobre Método KETO 28D™?",
+      "¡Hola! 😊 Cuéntame, ¿qué deseas saber sobre Método KETO 28D™?"
+    ]);
   }
 
   // --------------------------------------------------------
-  // LISTO / REVISIÓN MANUAL
+  // LISTO
   // --------------------------------------------------------
 
   if (texto === "listo") {
-    return respuestaListo();
+    return [
+      "Perfecto 😊",
+      "",
+      "Vamos a revisar manualmente tu comprobante para verificar el pago y la liberación de tu acceso.",
+      "",
+      "Si todavía no has enviado la imagen del comprobante, déjala por este mismo chat. 💚"
+    ].join("\n");
   }
 
   // --------------------------------------------------------
   // PAGAR DESPUÉS
-  // Debe evaluarse antes de la intención genérica de pago.
   // --------------------------------------------------------
 
   const preguntaPagoPosterior =
@@ -635,10 +536,10 @@ function respuestaDirecta(mensajeOriginal) {
   }
 
   // --------------------------------------------------------
-  // PAGO REALIZADO SIN ENTREGA
+  // PAGO REALIZADO PERO NO RECIBIDO
   // --------------------------------------------------------
 
-  const preguntaNoRecibio =
+  const preguntaPagoSinEntrega =
     contieneAlguna(texto, [
       "ya pague y no",
       "pague y no",
@@ -653,8 +554,16 @@ function respuestaDirecta(mensajeOriginal) {
       "no tengo acceso"
     ]);
 
-  if (preguntaNoRecibio) {
-    return respuestaNoRecibio();
+  if (preguntaPagoSinEntrega) {
+    return [
+      "No te preocupes 😊",
+      "",
+      "Si ya realizaste el pago y todavía no recibes tu acceso, puede tratarse de un pequeño retraso de conexión o validación.",
+      "",
+      "Responde con la palabra LISTO para que podamos revisar manualmente tu comprobante y ayudarte a liberar el acceso.",
+      "",
+      "No necesitas volver a pagar. 💚"
+    ].join("\n");
   }
 
   // --------------------------------------------------------
@@ -666,8 +575,8 @@ function respuestaDirecta(mensajeOriginal) {
       "pago movil",
       "datos pago movil",
       "datos del pago movil",
-      "numero para pagar",
       "numero pago movil",
+      "numero para pagar",
       "datos bancarios",
       "datos de pago",
       "banco de venezuela",
@@ -711,7 +620,7 @@ function respuestaDirecta(mensajeOriginal) {
   }
 
   // --------------------------------------------------------
-  // CONDICIÓN DE SALUD
+  // SALUD
   // --------------------------------------------------------
 
   if (
@@ -730,7 +639,11 @@ function respuestaDirecta(mensajeOriginal) {
       "enfermedad"
     ])
   ) {
-    return respuestaCondicionSalud();
+    return [
+      "Claro 😊 Puedes utilizar Método KETO 28D™ como una guía práctica para organizar mejor tus comidas, incorporar nuevas recetas y trabajar hábitos de alimentación de forma más consciente.",
+      "",
+      "Si tienes diabetes, hipertensión, utilizas insulina, medicamentos o tienes alguna condición diagnosticada, lo recomendable es adaptar cualquier cambio importante en tu alimentación junto con el profesional de salud que conoce tu caso. 💚"
+    ].join("\n");
   }
 
   // --------------------------------------------------------
@@ -751,11 +664,17 @@ function respuestaDirecta(mensajeOriginal) {
       "desde cero"
     ])
   ) {
-    return respuestaPrincipiante();
+    return [
+      "No necesitas experiencia previa 😊",
+      "",
+      "Método KETO 28D™ está pensado para que puedas comenzar aunque nunca hayas seguido este tipo de alimentación.",
+      "",
+      "Además, dentro de tus regalos tienes Cómo Empezar Keto y Keto para Principiantes para ayudarte desde el inicio. 🥑💚"
+    ].join("\n");
   }
 
   // --------------------------------------------------------
-  // ACCESO DE POR VIDA
+  // ACCESO
   // --------------------------------------------------------
 
   if (
@@ -772,11 +691,15 @@ function respuestaDirecta(mensajeOriginal) {
       "puedo guardarlo"
     ])
   ) {
-    return respuestaAccesoVida();
+    return [
+      "Sí 😊 El acceso es de por vida.",
+      "",
+      "Los 28 días corresponden a la estructura del método, pero todo el material queda contigo para que puedas volver a consultar recetas, guías y recursos cuando lo necesites. 🥑💚"
+    ].join("\n");
   }
 
   // --------------------------------------------------------
-  // ENTREGA, DIGITAL O GOOGLE DRIVE
+  // ENTREGA
   // --------------------------------------------------------
 
   if (
@@ -791,9 +714,9 @@ function respuestaDirecta(mensajeOriginal) {
       "como se entrega",
       "google drive",
       "drive",
+      "por whatsapp",
       "link",
-      "enlace",
-      "por whatsapp"
+      "enlace"
     ])
   ) {
     return respuestaEntrega();
@@ -814,11 +737,15 @@ function respuestaDirecta(mensajeOriginal) {
       "entrega inmediata"
     ])
   ) {
-    return respuestaTiempoEntrega();
+    return [
+      "La entrega es inmediata 😊",
+      "",
+      "Una vez que realizas el pago, envías el comprobante y confirmamos la compra, recibes por WhatsApp el enlace de Google Drive con Método KETO 28D™ + tus 9 regalos."
+    ].join("\n");
   }
 
   // --------------------------------------------------------
-  // SALUD O PESO
+  // PESO / RESULTADOS
   // --------------------------------------------------------
 
   if (
@@ -834,7 +761,11 @@ function respuestaDirecta(mensajeOriginal) {
       "bienestar"
     ])
   ) {
-    return respuestaSaludPeso();
+    return [
+      "Método KETO 28D™ puede ayudarte a organizar mejor tu alimentación y apoyar objetivos relacionados con el control de peso y la adopción de hábitos más saludables. 🥑💚",
+      "",
+      "Los resultados pueden variar de una persona a otra, por eso no prometemos una cantidad específica de kilos ni resultados médicos."
+    ].join("\n");
   }
 
   // --------------------------------------------------------
@@ -854,11 +785,25 @@ function respuestaDirecta(mensajeOriginal) {
       "que viene"
     ])
   ) {
-    return respuestaContenido();
+    return [
+      "Al adquirir Método KETO 28D™ recibes el método principal completo y además 9 regalos digitales 🎁:",
+      "",
+      "🎁 11 Recetas Keto",
+      "🎁 Cómo Empezar Keto",
+      "🎁 Keto Postres",
+      "🎁 Dieta Keto 2026",
+      "🎁 Recetario Keto Entre Amigos",
+      "🎁 Keto para Principiantes",
+      "🎁 Estrategia y Hábitos",
+      "🎁 Fin de Semana Keto Parrilla",
+      "🎁 Guía y Cuaderno Práctico para llevar el control del progreso Keto 28D",
+      "",
+      "La idea es que tengas más recetas, variedad, orientación y herramientas prácticas para acompañarte durante todo el proceso. 🥑💚"
+    ].join("\n");
   }
 
   // --------------------------------------------------------
-  // UPSELL / COMPLEMENTO
+  // PACK COMPLEMENTARIO
   // --------------------------------------------------------
 
   if (
@@ -872,7 +817,20 @@ function respuestaDirecta(mensajeOriginal) {
       "otro producto"
     ])
   ) {
-    return respuestaUpsell();
+    return [
+      "Sí 😊 Después de adquirir Método KETO 28D™ existe un complemento opcional:",
+      "",
+      "🔥 Pack Complementario KETO 28D™",
+      "",
+      "Incluye:",
+      "",
+      "🍽️ Complemento Método KETO 28D™",
+      "🍰 Salsas y Postres KETO 28D™",
+      "",
+      `💰 Los dos juntos por Bs. ${DATOS_PAGO.upsell.precioBolivares.toLocaleString("es-VE")}`,
+      "",
+      "Es totalmente opcional y no afecta tu acceso al método principal ni a tus 9 regalos. 💚"
+    ].join("\n");
   }
 
   // --------------------------------------------------------
@@ -891,14 +849,26 @@ function respuestaDirecta(mensajeOriginal) {
       "como compro",
       "como comprar",
       "deseo comprar",
-      "lo quiero"
+      "lo quiero",
+      "quiero pagarlo"
     ])
   ) {
-    return respuestaCompra();
+    return [
+      "Claro 😊",
+      "",
+      "Puedes adquirir Método KETO 28D™ completo + los 9 regalos digitales por:",
+      "",
+      `📲 Bs. ${DATOS_PAGO.precio.bolivares.toLocaleString("es-VE")} por Pago Móvil`,
+      `🟡 ${DATOS_PAGO.precio.binance} por Binance`,
+      "",
+      "Todo es 100% digital y se entrega inmediatamente después de confirmar el pago.",
+      "",
+      "¿Prefieres Pago Móvil o Binance? 🥑💚"
+    ].join("\n");
   }
 
   // --------------------------------------------------------
-  // PRECIO O MONTO
+  // PRECIO
   // --------------------------------------------------------
 
   if (
@@ -917,6 +887,23 @@ function respuestaDirecta(mensajeOriginal) {
     ])
   ) {
     return respuestaPrecio();
+  }
+
+  // --------------------------------------------------------
+  // INFORMACIÓN GENERAL
+  // --------------------------------------------------------
+
+  if (
+    contieneAlguna(texto, [
+      "que es",
+      "de que trata",
+      "como funciona",
+      "informacion del metodo",
+      "informacion",
+      "quiero informacion"
+    ])
+  ) {
+    return respuestaReligion();
   }
 
   return null;
@@ -1008,18 +995,11 @@ app.post("/mensaje", async (req, res) => {
     const respuestaIA =
       response.output_text || "";
 
-    /*
-      IMPORTANTE:
-      Conservamos el mismo flujo del índice original,
-      pero NO agregamos automáticamente un cierre de pago
-      a cualquier respuesta abierta.
-
-      Esto evita que "Hola" o una pregunta normal
-      terminen mostrando un mensaje de pago/comprobante.
-    */
-
     const respuestaFinal =
-      limpiarRespuesta(respuestaIA);
+      agregarCierre(
+        respuestaIA,
+        textoUsuario
+      );
 
     console.log(
       "Respuesta enviada:",
