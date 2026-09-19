@@ -4,52 +4,44 @@ const express = require("express");
 const OpenAI = require("openai");
 
 const app = express();
+
 app.use(express.json());
 
 const PORT = process.env.PORT || 8080;
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY
 });
 
 // ==========================================================
-// INFORMACIÓN OFICIAL DEL NEGOCIO
+// INFORMACIÓN OFICIAL
 // ==========================================================
 
-const NEGOCIO = {
-  nombre: "Keto sin Complicaciones",
+const DATOS_NEGOCIO = {
+  negocio: "Keto sin Complicaciones",
   agente: "Valentina Rojas",
   producto: "Método KETO 28D™",
-  tipo: "Producto digital",
+
   precioBolivares: 4450,
   precioBinance: "3.5 USDT",
-  entrega: "Inmediata después de validar el pago y recibir el comprobante",
-  canalEntrega: "Enlace de Google Drive enviado por WhatsApp",
-  acceso: "De por vida",
 
-  upsell: {
-    nombre: "Pack Complementario KETO 28D™",
-    precioBolivares: 1750,
-    productos: [
-      "Complemento Método KETO 28D™",
-      "Salsas y Postres KETO 28D™",
-    ],
-  },
-};
-
-const DATOS_PAGO = {
   pagoMovil: {
     banco: "Banco de Venezuela",
-    codigoBanco: "0102",
+    codigo: "0102",
     titular: "Kenny Barico",
     cedula: "20.110.298",
-    telefono: "0412-8319767",
+    telefono: "0412-8319767"
   },
 
   binance: {
     id: "1125063516",
-    monto: "3.5 USDT",
+    monto: "3.5 USDT"
   },
+
+  upsell: {
+    nombre: "Pack Complementario KETO 28D™",
+    precioBolivares: 1750
+  }
 };
 
 const REGALOS = [
@@ -61,138 +53,111 @@ const REGALOS = [
   "Keto para Principiantes",
   "Estrategia y Hábitos",
   "Fin de Semana Keto Parrilla",
-  "Guía y Cuaderno Práctico para llevar el control del progreso Keto 28D",
+  "Guía y Cuaderno Práctico para llevar el control del progreso Keto 28D"
 ];
 
 // ==========================================================
-// SYSTEM PROMPT
+// PROMPT DEL AGENTE
 // ==========================================================
 
 const SYSTEM_PROMPT = `
-Atiendes las conversaciones de WhatsApp de ${NEGOCIO.nombre}
-usando el nombre de atención ${NEGOCIO.agente}.
+Atiendes las conversaciones de WhatsApp de
+${DATOS_NEGOCIO.negocio} utilizando el nombre
+${DATOS_NEGOCIO.agente}.
 
-Tu trabajo es responder dudas sobre ${NEGOCIO.producto}
-de forma natural, breve, clara, cálida y comercial.
+Tu trabajo es responder dudas sobre
+${DATOS_NEGOCIO.producto}.
 
-Debes responder como una atención humana de WhatsApp,
-sin sonar robótico.
+Tu personalidad es amable, cercana, clara,
+paciente, comercial y humana.
+
+Responde como una conversación natural de WhatsApp.
 
 REGLAS DE ESTILO:
 
 - Responde siempre en español.
-- Usa lenguaje natural de WhatsApp.
-- Mantén las respuestas breves.
-- Normalmente responde en 1 o 2 párrafos cortos.
+- Utiliza párrafos cortos.
+- Deja una línea en blanco cuando ayude a leer mejor.
 - Usa emojis con moderación.
+- No escribas bloques largos innecesarios.
+- No repitas información que el cliente ya recibió.
 - No saludes nuevamente si la conversación ya comenzó.
-- No repitas información innecesariamente.
-- No copies discursos largos si el cliente hizo una pregunta concreta.
-- Responde directamente lo que la persona está preguntando.
-- No hagas preguntas abiertas innecesarias.
-- No presiones a la persona.
-- No uses Markdown con encabezados tipo #.
+- Responde directamente la duda.
+- No hagas preguntas innecesarias.
+- No uses encabezados Markdown con símbolos #.
 - No inventes información.
 - No inventes precios.
-- No inventes métodos de pago.
-- No inventes garantías.
 - No inventes promociones.
-- No inventes resultados.
-- No inventes condiciones médicas.
-- No inventes enlaces.
+- No inventes garantías.
+- No inventes medios de pago.
 - No inventes datos bancarios.
-- No inventes información sobre los bonos.
-- No te presentes espontáneamente como inteligencia artificial,
-  bot o agente automatizado.
-- Si la persona pregunta directamente si la atención es automatizada,
-  responde con transparencia y continúa ayudándola.
-- Utiliza únicamente la información oficial incluida en este prompt.
-- Si no tienes un dato confirmado, indica de forma natural
-  que necesitas verificarlo con el equipo.
+- No inventes enlaces.
+- No inventes resultados.
+- No asegures resultados médicos.
+- No te presentes espontáneamente como bot,
+  inteligencia artificial o agente automatizado.
+- Si la persona pregunta directamente si la atención
+  es automatizada, responde con transparencia.
+- No menciones pagos o comprobantes cuando el usuario
+  solamente está saludando.
+- No agregues un cierre de compra a todas las respuestas.
+- Solo dirige al pago cuando la persona demuestra intención
+  real de compra o pregunta directamente cómo comprar.
 
 INFORMACIÓN OFICIAL:
 
-Negocio:
-${NEGOCIO.nombre}
+El producto es:
+Método KETO 28D™
 
-Producto:
-${NEGOCIO.producto}
+Es un producto 100% digital.
 
-Tipo:
-Producto 100% digital.
+Es una ruta práctica de 28 días diseñada para ayudar
+a organizar mejor la alimentación, tener mayor variedad
+en las comidas, reducir la improvisación y desarrollar
+hábitos más sostenibles.
 
-El producto está estructurado como una ruta práctica de 28 días
-para ayudar a la persona a organizar mejor su alimentación,
-tener más variedad,
-reducir la improvisación al momento de preparar sus comidas
-y desarrollar hábitos más sostenibles.
+El cliente recibe el Método KETO 28D™ completo
+más 9 regalos digitales.
+
+LOS 9 REGALOS SON:
+
+1. 11 Recetas Keto
+2. Cómo Empezar Keto
+3. Keto Postres
+4. Dieta Keto 2026
+5. Recetario Keto Entre Amigos
+6. Keto para Principiantes
+7. Estrategia y Hábitos
+8. Fin de Semana Keto Parrilla
+9. Guía y Cuaderno Práctico para llevar el control
+   del progreso Keto 28D
 
 PRECIO:
 
 Pago Móvil:
-Bs. ${NEGOCIO.precioBolivares.toLocaleString("es-VE")}
+Bs. 4.450
 
 Binance:
-${NEGOCIO.precioBinance}
+3.5 USDT
 
-ENTREGA:
-
-La entrega es inmediata una vez que el pago es validado
-y el cliente envía el comprobante.
-
-El acceso se entrega mediante un enlace de Google Drive
-enviado por WhatsApp.
-
-ACCESO:
-
-El acceso es de por vida.
-
-Los 28 días corresponden a la estructura del método,
-no al tiempo durante el cual el cliente puede utilizarlo.
-
-El material queda disponible para que pueda volver a consultarlo
-cuando lo necesite.
-
-MATERIAL:
-
-El cliente recibe:
-
-${NEGOCIO.producto}
-
-+
-
-9 regalos digitales.
-
-LOS 9 REGALOS OFICIALES SON:
-
-1. 11 Recetas Keto.
-2. Cómo Empezar Keto.
-3. Keto Postres.
-4. Dieta Keto 2026.
-5. Recetario Keto Entre Amigos.
-6. Keto para Principiantes.
-7. Estrategia y Hábitos.
-8. Fin de Semana Keto Parrilla.
-9. Guía y Cuaderno Práctico para llevar el control del progreso Keto 28D.
-
-DATOS OFICIALES DE PAGO MÓVIL:
+PAGO MÓVIL:
 
 Banco:
 Banco de Venezuela
 
-Código bancario:
+Código:
 0102
 
 Titular:
 Kenny Barico
 
-C.I.:
+Cédula:
 20.110.298
 
 Teléfono:
 0412-8319767
 
-DATOS OFICIALES DE BINANCE:
+BINANCE:
 
 Monto:
 3.5 USDT
@@ -201,134 +166,84 @@ Binance ID:
 1125063516
 
 También existe un código QR de Binance
-que se muestra dentro del flujo de WhatsApp.
+que puede mostrarse dentro del flujo de WhatsApp.
 
-Nunca inventes otro QR.
+ENTREGA:
+
+El producto se entrega después de confirmar el pago.
+
+Una vez realizado el pago y enviado el comprobante,
+el acceso se libera de inmediato.
+
+El contenido se entrega mediante un enlace de Google Drive
+enviado por WhatsApp.
+
+El acceso es de por vida.
+
+Los 28 días corresponden a la estructura del método,
+no al tiempo de acceso.
+
+SALUD:
+
+El método puede apoyar una mejor organización de la alimentación,
+hábitos más conscientes y objetivos relacionados con control de peso.
+
+No prometas:
+- kilos específicos
+- resultados garantizados
+- curación de enfermedades
+- control médico de enfermedades
+- reversión de diabetes
+- reversión de hipertensión
+
+Si alguien menciona diabetes, hipertensión,
+insulina, medicamentos o alguna condición médica,
+explica que puede utilizar el material como guía práctica
+de apoyo, pero que cualquier cambio importante en
+su alimentación debe adaptarse a las indicaciones
+del profesional de salud que conoce su caso.
 
 PACK COMPLEMENTARIO:
 
-Después de adquirir el producto principal
-puede presentarse un complemento opcional.
+Después de la compra principal existe un complemento opcional:
 
-Nombre:
+Pack Complementario KETO 28D™
 
-${NEGOCIO.upsell.nombre}
+Incluye:
 
-Incluye exactamente:
-
-1. Complemento Método KETO 28D™
-2. Salsas y Postres KETO 28D™
+- Complemento Método KETO 28D™
+- Salsas y Postres KETO 28D™
 
 Precio:
+Bs. 1.750
 
-Bs. ${NEGOCIO.upsell.precioBolivares.toLocaleString("es-VE")}
+Este complemento es opcional.
 
-El pack complementario es opcional.
-
-No es necesario comprarlo para recibir
-${NEGOCIO.producto}
-ni los 9 regalos.
-
-No existe dentro de la información oficial
-un precio confirmado en USDT para este complemento.
-
-Si una persona pregunta cuánto cuesta por Binance,
-indica que ese monto debe confirmarse con el equipo.
-
-SALUD Y RESULTADOS:
-
-${NEGOCIO.producto}
-puede ayudar a la persona a organizar mejor su alimentación,
-adoptar hábitos más conscientes,
-tener más variedad
-y apoyar objetivos relacionados con el control de peso.
-
-Sin embargo:
-
-- No prometas kilos específicos.
-- No garantices resultados.
-- No prometas resultados médicos.
-- No afirmes que el método cura enfermedades.
-- No afirmes que controla enfermedades.
-- No afirmes que revierte enfermedades.
-- No afirmes que sustituye tratamientos médicos.
-
-Si la persona menciona:
-
-- diabetes
-- hipertensión
-- insulina
-- medicamentos
-- tratamientos
-- alguna condición de salud diagnosticada
-
-explica de forma natural que puede utilizar
-el material como guía práctica de apoyo,
-pero que cualquier cambio importante en su alimentación
-debería conversarlo también con el profesional
-de salud que conoce su caso.
-
-No uses afirmaciones como:
-
-"esta comida te inflama"
-
-como una verdad médica general.
+No hace falta comprarlo para recibir
+Método KETO 28D™ ni los 9 regalos.
 
 SOPORTE:
 
-Si el cliente ya realizó el pago
-pero todavía no recibió su acceso,
-puede existir un pequeño retraso de conexión
-o validación.
+Si una persona ya pagó y todavía no recibió el producto,
+indícale que escriba la palabra LISTO.
 
-En ese caso debe escribir la palabra:
+Eso permitirá llevar el caso a revisión manual.
 
-LISTO
+Nunca le pidas pagar nuevamente.
 
-para solicitar revisión manual.
+OBJETIVO:
 
-No le pidas realizar un segundo pago.
+Primero resuelve la duda del cliente.
 
-Si tiene problemas con:
+Cuando exista intención clara de compra,
+puedes llevarlo naturalmente a elegir entre:
 
-- Google Drive
-- enlace
-- acceso
-- apertura de archivos
-- material
+Pago Móvil
+o
+Binance.
 
-debe escribir por este mismo WhatsApp
-para que se revise su caso.
-
-OBJETIVO DE LA CONVERSACIÓN:
-
-Tu objetivo principal es:
-
-1. Resolver la duda real del cliente.
-2. Dar claridad.
-3. Dar confianza.
-4. Evitar respuestas robóticas.
-5. Llevar de manera natural al siguiente paso comercial
-   cuando exista intención de compra.
-
-Cuando la persona tenga intención de compra,
-el siguiente paso correcto es preguntarle si prefiere:
-
-- Pago Móvil
-- Binance
-
-No agregues un cierre comercial a todas las respuestas.
-
-Solo hazlo cuando tenga sentido dentro de la conversación.
-
-Si la persona ya eligió Pago Móvil,
-envía solamente los datos de Pago Móvil.
-
-Si la persona ya eligió Binance,
-envía solamente los datos de Binance.
-
-Nunca vuelvas a preguntarle qué método prefiere
-si ya lo indicó.
+Si ya eligió uno,
+no vuelvas a preguntarle cuál prefiere.
 `;
 
 // ==========================================================
@@ -368,8 +283,18 @@ function limpiarRespuesta(valor) {
 }
 
 // ==========================================================
-// CIERRES COMERCIALES
+// MENSAJES REUTILIZABLES
 // ==========================================================
+
+function respuestaSaludo() {
+  return elegirAleatoria([
+    "¡Hola! 😊 Qué gusto saludarte. ¿En qué puedo ayudarte con Método KETO 28D™? 🥑",
+
+    "¡Hola! 👋💚 Claro, estoy aquí para ayudarte. ¿Qué te gustaría saber sobre Método KETO 28D™?",
+
+    "¡Hola! 😊 Bienvenido/a. Cuéntame qué deseas saber sobre Método KETO 28D™."
+  ]);
+}
 
 function cierreCompra() {
   return elegirAleatoria([
@@ -377,474 +302,246 @@ function cierreCompra() {
 
     "Si deseas adquirirlo, dime si prefieres Pago Móvil o Binance 💚",
 
-    "¿Te envío los datos de Pago Móvil o prefieres Binance? 🥑",
+    "¿Te envío los datos de Pago Móvil o prefieres Binance? 🥑"
   ]);
 }
 
-function debeAgregarCierre(textoNormalizado) {
-  return contieneAlguna(textoNormalizado, [
-    "quiero comprar",
-    "quiero adquirir",
-    "como compro",
-    "como comprar",
-    "me interesa",
-    "quiero el metodo",
-    "quiero el producto",
-    "quiero pagarlo",
-    "donde pago",
-  ]);
-}
-
-function agregarCierre(
-  texto,
-  textoNormalizado
-) {
-  const limpio =
-    limpiarRespuesta(texto);
-
-  if (!limpio) {
-    return cierreCompra();
-  }
-
-  if (!debeAgregarCierre(textoNormalizado)) {
-    return limpio;
-  }
-
-  const normalizada =
-    normalizarTexto(limpio);
-
-  const yaTieneCierre =
-    normalizada.includes(
-      "pago movil o binance"
-    ) ||
-    normalizada.includes(
-      "prefieres pago movil"
-    ) ||
-    normalizada.includes(
-      "prefieres binance"
-    );
-
-  if (yaTieneCierre) {
-    return limpio;
-  }
-
-  return `${limpio}\n\n${cierreCompra()}`;
-}
-
-// ==========================================================
-// RESPUESTAS REUTILIZABLES
-// ==========================================================
-
-function respuestaContenido() {
-
-  const variantesIntro = [
-
-    `${NEGOCIO.producto} es un sistema digital de 28 días pensado para ayudarte a organizar mejor tu alimentación, tener más variedad en tus comidas y desarrollar hábitos más sostenibles.`,
-
-    `${NEGOCIO.producto} te da una ruta práctica de 28 días para organizar tus comidas, reducir la improvisación y tener más opciones durante el proceso.`,
-
-    `Con ${NEGOCIO.producto} tienes una estructura práctica de 28 días para organizar mejor tus comidas y acompañar cambios de hábitos de una forma más ordenada.`,
-  ];
-
+function respuestaCompra() {
   return [
-    elegirAleatoria(variantesIntro),
-
+    `Claro 😊 Puedes adquirir ${DATOS_NEGOCIO.producto} completo + los 9 regalos digitales por:`,
     "",
-
-    "Además recibes 9 regalos digitales 🎁:",
-
+    `📲 Bs. ${DATOS_NEGOCIO.precioBolivares.toLocaleString("es-VE")} por Pago Móvil`,
+    `🟡 ${DATOS_NEGOCIO.precioBinance} por Binance`,
     "",
-
-    ...REGALOS.map(
-      (regalo) => `🎁 ${regalo}`
-    ),
-
+    "Todo es 100% digital y se entrega por WhatsApp una vez confirmado el pago.",
     "",
-
-    "La idea es que tengas más recetas, orientación, variedad y herramientas prácticas para aprovechar mejor tus 28 días. 🥑💚",
+    cierreCompra()
   ].join("\n");
 }
 
-// ==========================================================
-// ENTREGA
-// ==========================================================
-
-function respuestaEntrega() {
-
-  return elegirAleatoria([
-
-    [
-      `${NEGOCIO.producto} es 100% digital 😊`,
-
-      "",
-
-      "Una vez validado tu pago y recibido el comprobante, el acceso se libera de inmediato mediante un enlace de Google Drive enviado por este mismo WhatsApp.",
-
-      "",
-
-      "Desde allí puedes abrir tu método y tus 9 regalos desde el teléfono, tablet o computadora. 🥑💚",
-    ].join("\n"),
-
-    [
-      "La entrega es completamente digital y muy sencilla 📲",
-
-      "",
-
-      "Después de confirmar tu pago y comprobante, recibes de inmediato por WhatsApp el enlace de Google Drive con Método KETO 28D™ + tus 9 regalos.",
-    ].join("\n"),
-  ]);
+function respuestaPrecio() {
+  return [
+    `${DATOS_NEGOCIO.producto} completo + los 9 regalos digitales tiene un valor de:`,
+    "",
+    `📲 Bs. ${DATOS_NEGOCIO.precioBolivares.toLocaleString("es-VE")} por Pago Móvil`,
+    `🟡 ${DATOS_NEGOCIO.precioBinance} por Binance`,
+    "",
+    "Todo el material es digital y el acceso es de por vida. 🥑💚"
+  ].join("\n");
 }
-
-// ==========================================================
-// PRECIO
-// ==========================================================
-
-function respuestaPrecioGeneral() {
-
-  return elegirAleatoria([
-
-    [
-      `${NEGOCIO.producto} completo + tus 9 regalos digitales tiene un valor de:`,
-
-      "",
-
-      `📲 Bs. ${NEGOCIO.precioBolivares.toLocaleString("es-VE")} por Pago Móvil`,
-
-      `🟡 ${NEGOCIO.precioBinance} por Binance`,
-
-      "",
-
-      "Una vez realizado el pago, envías el comprobante por este mismo WhatsApp y se libera tu acceso digital. 💚",
-    ].join("\n"),
-
-    [
-      `El valor de ${NEGOCIO.producto} + los 9 regalos es Bs. ${NEGOCIO.precioBolivares.toLocaleString("es-VE")} por Pago Móvil o ${NEGOCIO.precioBinance} por Binance. 🥑`,
-
-      "",
-
-      "Después de validar el comprobante recibes el acceso de inmediato por WhatsApp.",
-    ].join("\n"),
-  ]);
-}
-
-// ==========================================================
-// PAGO MÓVIL
-// ==========================================================
 
 function respuestaPagoMovil() {
-
   return [
-
-    "Perfecto 😊 Estos son los datos para Pago Móvil:",
-
+    "Perfecto 😊 Estos son los datos para realizar tu Pago Móvil:",
     "",
-
-    `🏦 Banco: ${DATOS_PAGO.pagoMovil.banco}`,
-
-    `🔢 Código: ${DATOS_PAGO.pagoMovil.codigoBanco}`,
-
-    `👤 Titular: ${DATOS_PAGO.pagoMovil.titular}`,
-
-    `🪪 C.I.: ${DATOS_PAGO.pagoMovil.cedula}`,
-
-    `📲 Teléfono: ${DATOS_PAGO.pagoMovil.telefono}`,
-
+    `🏦 Banco: ${DATOS_NEGOCIO.pagoMovil.banco}`,
+    `🔢 Código: ${DATOS_NEGOCIO.pagoMovil.codigo}`,
+    `👤 Titular: ${DATOS_NEGOCIO.pagoMovil.titular}`,
+    `🪪 C.I.: ${DATOS_NEGOCIO.pagoMovil.cedula}`,
+    `📲 Teléfono: ${DATOS_NEGOCIO.pagoMovil.telefono}`,
     "",
-
-    `💰 Monto: Bs. ${NEGOCIO.precioBolivares.toLocaleString("es-VE")}`,
-
+    `💰 Monto: Bs. ${DATOS_NEGOCIO.precioBolivares.toLocaleString("es-VE")}`,
     "",
-
-    `Cuando realices el pago, envíame el comprobante por este mismo chat. Una vez validado, se libera de inmediato tu ${NEGOCIO.producto} + los 9 regalos. 🥑💚`,
+    "Cuando realices el pago, envíame por aquí el comprobante.",
+    "",
+    `Una vez confirmado, liberamos de inmediato tu ${DATOS_NEGOCIO.producto} + los 9 regalos. 🥑💚`
   ].join("\n");
 }
-
-// ==========================================================
-// BINANCE
-// ==========================================================
 
 function respuestaBinance() {
-
   return [
-
-    "Perfecto 💛 Puedes realizar el pago por Binance con estos datos:",
-
+    "Perfecto 💛 Puedes realizar tu pago por Binance:",
     "",
-
-    `💰 Monto: ${DATOS_PAGO.binance.monto}`,
-
-    `🟡 Binance ID: ${DATOS_PAGO.binance.id}`,
-
+    `💰 Monto: ${DATOS_NEGOCIO.binance.monto}`,
+    `🟡 Binance ID: ${DATOS_NEGOCIO.binance.id}`,
     "",
-
-    "También puedes utilizar el código QR que te compartimos dentro del flujo de WhatsApp.",
-
+    "También puedes utilizar el código QR de Binance que se muestra dentro del flujo.",
     "",
-
-    `Cuando completes el pago, envíame el comprobante por aquí y, una vez validado, se libera tu ${NEGOCIO.producto} + los 9 regalos. 🥑🎁`,
+    "Cuando completes el pago, envíame el comprobante por este mismo chat.",
+    "",
+    `Una vez confirmado, liberamos tu ${DATOS_NEGOCIO.producto} + los 9 regalos. 🥑🎁`
   ].join("\n");
 }
 
-// ==========================================================
-// TIEMPO DE ENTREGA
-// ==========================================================
+function respuestaContenido() {
+  return [
+    `${DATOS_NEGOCIO.producto} es una ruta digital de 28 días pensada para ayudarte a organizar mejor tu alimentación, tener más variedad y reducir la improvisación diaria. 🥑💚`,
+    "",
+    "Además recibes 9 regalos digitales:",
+    "",
+    ...REGALOS.map((regalo) => `🎁 ${regalo}`),
+    "",
+    "Así tienes recetas, orientación y herramientas adicionales para acompañarte durante todo el proceso."
+  ].join("\n");
+}
+
+function respuestaEntrega() {
+  return [
+    `${DATOS_NEGOCIO.producto} es 100% digital 📲`,
+    "",
+    "Una vez confirmado el pago y recibido el comprobante, liberamos de inmediato tu acceso mediante un enlace de Google Drive enviado por este mismo WhatsApp.",
+    "",
+    "Puedes acceder desde tu teléfono, tablet o computadora. 🥑💚"
+  ].join("\n");
+}
 
 function respuestaTiempoEntrega() {
-
-  return elegirAleatoria([
-
-    `La entrega es inmediata 😊 Una vez realizas el pago, envías el comprobante y se valida, recibes por WhatsApp el enlace de Google Drive con ${NEGOCIO.producto} + tus 9 regalos.`,
-
-    `No tienes que esperar días 💚 Después de validar tu pago y comprobante, el acceso digital se libera de inmediato por este mismo WhatsApp mediante Google Drive.`,
-  ]);
-}
-
-// ==========================================================
-// PAGO REALIZADO PERO SIN ENTREGA
-// ==========================================================
-
-function respuestaNoRecibio() {
-
-  return elegirAleatoria([
-
-    [
-      "No te preocupes 😊 Si ya realizaste el pago y todavía no recibes tu acceso, puede tratarse de un pequeño retraso de conexión o validación.",
-
-      "",
-
-      "Responde con la palabra LISTO y nuestro equipo revisará manualmente tu comprobante para ayudarte a liberar el acceso.",
-
-      "",
-
-      "No necesitas volver a pagar. 💚",
-    ].join("\n"),
-
-    [
-      "Si ya pagaste y aún no recibes el material, tranquilo 😊",
-
-      "",
-
-      "Escribe LISTO para solicitar una revisión manual de tu comprobante y verificar la liberación de tu acceso.",
-
-      "",
-
-      "No hagas un segundo pago.",
-    ].join("\n"),
-  ]);
-}
-
-// ==========================================================
-// SOPORTE MANUAL
-// ==========================================================
-
-function respuestaListoSoporte() {
-
   return [
-
-    "Perfecto 😊 Ya recibimos tu aviso.",
-
+    "La entrega es inmediata 😊",
     "",
-
-    "Nuestro equipo debe revisar manualmente el comprobante y verificar la liberación de tu acceso.",
-
-    "",
-
-    "Si todavía no has enviado la imagen del comprobante, déjala en este mismo chat. 💚",
+    "Una vez realizado el pago, enviado el comprobante y confirmado el mismo, recibes por WhatsApp el enlace de Google Drive con Método KETO 28D™ + tus 9 regalos."
   ].join("\n");
 }
-
-// ==========================================================
-// PESO Y SALUD
-// ==========================================================
-
-function respuestaSaludPeso() {
-
-  return elegirAleatoria([
-
-    [
-      `${NEGOCIO.producto} puede ayudarte a organizar mejor tu alimentación y apoyar objetivos como el control de peso y la adopción de hábitos más saludables. 🥑💚`,
-
-      "",
-
-      "Durante los 28 días tienes una guía práctica con recetas, ideas y recursos para reducir la improvisación y mantener una rutina con mayor constancia.",
-
-      "",
-
-      "Los resultados pueden variar de una persona a otra y no se garantizan resultados médicos ni una cantidad específica de kilos.",
-    ].join("\n"),
-
-    [
-      "El método está pensado para ayudarte a mejorar la organización de tus comidas, tener más variedad y construir hábitos más conscientes. 💚",
-
-      "",
-
-      "Puede acompañar objetivos de control de peso, pero cada persona responde de forma diferente y no prometemos resultados específicos ni médicos.",
-    ].join("\n"),
-  ]);
-}
-
-// ==========================================================
-// CONDICIONES DE SALUD
-// ==========================================================
-
-function respuestaCondicionSalud() {
-
-  return elegirAleatoria([
-
-    [
-      `Claro 😊 ${NEGOCIO.producto} puede servirte como una guía práctica para organizar mejor tus comidas, incorporar nuevas recetas y trabajar hábitos de alimentación de forma más consciente.`,
-
-      "",
-
-      "Si tienes diabetes, hipertensión, usas medicamentos, insulina o tienes alguna condición diagnosticada, lo ideal es que cualquier cambio importante en tu alimentación lo converses también con el profesional de salud que conoce tu caso. 💚",
-    ].join("\n"),
-
-    [
-      "Puedes aprovechar el método como material de apoyo con recetas, planificación e ideas para organizarte mejor 😊",
-
-      "",
-
-      "Si tienes una condición de salud diagnosticada o utilizas medicamentos, conviene adaptar cualquier cambio importante a las indicaciones del profesional que conoce tu caso.",
-    ].join("\n"),
-  ]);
-}
-
-// ==========================================================
-// PRINCIPIANTES
-// ==========================================================
-
-function respuestaPrincipiante() {
-
-  return elegirAleatoria([
-
-    [
-      `No necesitas experiencia previa 😊 ${NEGOCIO.producto} está pensado para que puedas comenzar aunque nunca hayas seguido este tipo de alimentación.`,
-
-      "",
-
-      "Además, dentro de tus regalos tienes Cómo Empezar Keto y Keto para Principiantes, justamente para ayudarte a familiarizarte con el proceso desde el inicio. 🥑💚",
-    ].join("\n"),
-
-    [
-      "Sí puedes empezar desde cero 💚",
-
-      "",
-
-      "El contenido está organizado de forma práctica para acompañarte durante los 28 días, y tienes materiales específicos para principiantes dentro de tus regalos.",
-    ].join("\n"),
-  ]);
-}
-
-// ==========================================================
-// ACCESO DE POR VIDA
-// ==========================================================
 
 function respuestaAccesoVida() {
-
-  return elegirAleatoria([
-
-    [
-      "Sí 😊 el acceso es de por vida.",
-
-      "",
-
-      "Los 28 días corresponden a la estructura del método, pero una vez recibes Método KETO 28D™ + tus 9 regalos, el material queda contigo para que puedas volver a consultar recetas, guías y recursos cuando lo necesites. 🥑💚",
-    ].join("\n"),
-
-    [
-      "Tu acceso no vence 💚",
-
-      "",
-
-      "El método está organizado en 28 días, pero el contenido queda disponible para ti de forma permanente y puedes volver a utilizarlo más adelante.",
-    ].join("\n"),
-  ]);
+  return [
+    "Sí 😊 el acceso es de por vida.",
+    "",
+    "Los 28 días corresponden a la estructura del método, pero todo el material queda disponible para que puedas volver a consultar las recetas, guías y recursos cuando lo necesites. 🥑💚"
+  ].join("\n");
 }
 
-// ==========================================================
-// SOPORTE DE ACCESO
-// ==========================================================
-
-function respuestaSoporteAcceso() {
-
-  return elegirAleatoria([
-
-    [
-      "Claro 😊 Si después de tu compra tienes alguna duda o problema para abrir o acceder al material, escríbenos por este mismo WhatsApp.",
-
-      "",
-
-      "Revisamos tu caso para ayudarte a verificar el enlace y que puedas acceder correctamente a Método KETO 28D™ + tus 9 regalos. 💚",
-    ].join("\n"),
-
-    [
-      "Si tienes algún inconveniente con el enlace o el acceso, escríbenos por aquí 😊",
-
-      "",
-
-      "Revisamos contigo lo necesario para que no te quedes sin tu material.",
-    ].join("\n"),
-  ]);
+function respuestaPrincipiante() {
+  return [
+    "No necesitas experiencia previa 😊",
+    "",
+    "Método KETO 28D™ está pensado para que puedas comenzar desde cero.",
+    "",
+    "Además, dentro de tus regalos tienes Cómo Empezar Keto y Keto para Principiantes, que te ayudan a familiarizarte con el proceso. 🥑💚"
+  ].join("\n");
 }
 
-// ==========================================================
-// UPSELL
-// ==========================================================
+function respuestaSaludPeso() {
+  return [
+    "Método KETO 28D™ puede ayudarte a organizar mejor tu alimentación y apoyar objetivos relacionados con el control de peso y la adopción de hábitos más saludables. 🥑💚",
+    "",
+    "Los resultados pueden variar de una persona a otra, por eso no prometemos una cantidad específica de kilos ni resultados médicos."
+  ].join("\n");
+}
+
+function respuestaCondicionSalud() {
+  return [
+    "Claro 😊 Puedes utilizar Método KETO 28D™ como una guía práctica para organizar mejor tus comidas, incorporar nuevas recetas y trabajar hábitos de alimentación de forma más consciente.",
+    "",
+    "Si tienes diabetes, hipertensión, utilizas insulina, medicamentos o tienes alguna condición diagnosticada, lo ideal es adaptar cualquier cambio importante en tu alimentación junto al profesional de salud que conoce tu caso. 💚"
+  ].join("\n");
+}
+
+function respuestaNoRecibio() {
+  return [
+    "No te preocupes 😊",
+    "",
+    "Si ya realizaste el pago y todavía no recibes el acceso, puede existir un pequeño retraso de conexión o validación.",
+    "",
+    "Escribe la palabra LISTO y revisaremos manualmente tu comprobante para ayudarte a liberar el acceso.",
+    "",
+    "No necesitas volver a pagar. 💚"
+  ].join("\n");
+}
+
+function respuestaListo() {
+  return [
+    "Perfecto 😊",
+    "",
+    "Vamos a revisar manualmente tu comprobante para verificar el pago y la liberación de tu acceso.",
+    "",
+    "Si todavía no has enviado la imagen del comprobante, déjala por este mismo chat. 💚"
+  ].join("\n");
+}
+
+function respuestaSoporte() {
+  return [
+    "Claro 😊 Si tienes algún inconveniente para abrir el enlace o acceder al material, escríbenos por este mismo WhatsApp.",
+    "",
+    "Revisaremos tu caso para ayudarte a acceder correctamente a Método KETO 28D™ + tus 9 regalos. 💚"
+  ].join("\n");
+}
 
 function respuestaUpsell() {
-
   return [
-
-    `Sí 😊 Después de la compra principal existe un complemento opcional llamado ${NEGOCIO.upsell.nombre}.`,
-
+    "Sí 😊 Después de adquirir Método KETO 28D™ existe un complemento opcional:",
     "",
-
-    `Incluye ${NEGOCIO.upsell.productos[0]} + ${NEGOCIO.upsell.productos[1]}.`,
-
+    `🔥 ${DATOS_NEGOCIO.upsell.nombre}`,
     "",
-
-    `El valor del pack es Bs. ${NEGOCIO.upsell.precioBolivares.toLocaleString("es-VE")}.`,
-
+    "Incluye:",
     "",
-
-    `Es totalmente opcional y no afecta tu acceso a ${NEGOCIO.producto} ni a los 9 regalos. 💚`,
-  ].join("\n");
-}
-
-function respuestaUpsellBinance() {
-
-  return [
-
-    `El ${NEGOCIO.upsell.nombre} tiene un precio oficial de Bs. ${NEGOCIO.upsell.precioBolivares.toLocaleString("es-VE")}.`,
-
+    "🍽️ Complemento Método KETO 28D™",
+    "🍰 Salsas y Postres KETO 28D™",
     "",
-
-    "El monto en USDT para este complemento debe confirmarse con el equipo antes de indicarlo, para no darte un dato incorrecto. 😊",
+    `💰 Los dos juntos por Bs. ${DATOS_NEGOCIO.upsell.precioBolivares.toLocaleString("es-VE")}`,
+    "",
+    "Es opcional y no afecta tu acceso al método principal ni a tus 9 regalos. 💚"
   ].join("\n");
 }
 
 // ==========================================================
-// RESPUESTAS DIRECTAS / INTENCIONES
+// RESPUESTAS DIRECTAS
 // ==========================================================
 
 function respuestaDirecta(mensajeOriginal) {
 
-  const texto =
-    normalizarTexto(mensajeOriginal);
+  const texto = normalizarTexto(mensajeOriginal);
 
   if (!texto) {
     return null;
   }
 
   // --------------------------------------------------------
-  // REVISIÓN MANUAL
+  // SALUDO
+  // --------------------------------------------------------
+
+  const saludo =
+    texto === "hola" ||
+    texto === "buenas" ||
+    texto === "buen dia" ||
+    texto === "buenos dias" ||
+    texto === "buenas tardes" ||
+    texto === "buenas noches" ||
+    texto === "hello" ||
+    texto === "holaa" ||
+    texto === "holaaa";
+
+  if (saludo) {
+    return {
+      intencion: "saludo",
+      respuesta: respuestaSaludo()
+    };
+  }
+
+  // --------------------------------------------------------
+  // LISTO / REVISIÓN MANUAL
   // --------------------------------------------------------
 
   if (texto === "listo") {
-
     return {
       intencion: "revision_manual",
-      respuesta: respuestaListoSoporte(),
+      respuesta: respuestaListo()
+    };
+  }
+
+  // --------------------------------------------------------
+  // PAGO REALIZADO Y NO RECIBIDO
+  // --------------------------------------------------------
+
+  if (
+    contieneAlguna(texto, [
+      "ya pague y no",
+      "pague y no",
+      "ya hice el pago",
+      "ya pague",
+      "ya envie el comprobante",
+      "envie el comprobante",
+      "no me llego",
+      "no he recibido",
+      "todavia no recibo",
+      "no recibi el producto",
+      "no recibi el metodo",
+      "no tengo acceso"
+    ])
+  ) {
+    return {
+      intencion: "pago_sin_entrega",
+      respuesta: respuestaNoRecibio()
     };
   }
 
@@ -857,91 +554,100 @@ function respuestaDirecta(mensajeOriginal) {
       "diabetes",
       "diabetico",
       "diabetica",
-      "azucar",
+      "azucar alta",
       "hipertension",
       "presion alta",
       "insulina",
-      "medicamento",
       "medicamentos",
+      "medicamento",
       "tratamiento",
       "condicion de salud",
-      "enfermedad",
+      "enfermedad"
     ])
   ) {
-
     return {
       intencion: "condicion_salud",
-      respuesta: respuestaCondicionSalud(),
+      respuesta: respuestaCondicionSalud()
     };
   }
 
   // --------------------------------------------------------
-  // PAGO REALIZADO PERO NO RECIBIÓ
-  // --------------------------------------------------------
-
-  if (
-    contieneAlguna(texto, [
-      "ya pague y no",
-      "pague y no",
-      "ya hice el pago",
-      "ya envie el comprobante",
-      "no me llego",
-      "no he recibido",
-      "todavia no recibo",
-      "no recibi el producto",
-      "no recibi el metodo",
-      "no tengo acceso",
-    ])
-  ) {
-
-    return {
-      intencion: "pago_sin_entrega",
-      respuesta: respuestaNoRecibio(),
-    };
-  }
-
-  // --------------------------------------------------------
-  // SOPORTE DE ACCESO
+  // SOPORTE
   // --------------------------------------------------------
 
   if (
     contieneAlguna(texto, [
       "problema con el link",
       "problema con el enlace",
-      "no abre",
       "no puedo abrir",
+      "no abre",
       "no puedo entrar",
       "no funciona el link",
       "no funciona el enlace",
-      "ayuda con el acceso",
       "problema de acceso",
-      "soporte",
+      "ayuda con el acceso",
+      "soporte"
     ])
   ) {
-
     return {
-      intencion: "soporte_acceso",
-      respuesta: respuestaSoporteAcceso(),
+      intencion: "soporte",
+      respuesta: respuestaSoporte()
     };
   }
 
   // --------------------------------------------------------
-  // UPSELL EN BINANCE
+  // PAGO MÓVIL
   // --------------------------------------------------------
 
-  if (
+  const preguntaPagoMovil =
     contieneAlguna(texto, [
-      "upsell binance",
-      "complemento binance",
-      "pack complementario binance",
-      "complemento usdt",
-      "pack en usdt",
-    ])
-  ) {
+      "pago movil",
+      "pagar por pago movil",
+      "quiero pago movil",
+      "prefiero pago movil",
+      "datos del pago movil",
+      "datos pago movil",
+      "numero pago movil",
+      "banco de venezuela",
+      "codigo 0102"
+    ]) ||
+    texto === "movil";
 
+  if (preguntaPagoMovil) {
     return {
-      intencion: "upsell_binance",
-      respuesta: respuestaUpsellBinance(),
+      intencion: "pago_movil",
+      respuesta: respuestaPagoMovil()
+    };
+  }
+
+  // --------------------------------------------------------
+  // BINANCE
+  // --------------------------------------------------------
+
+  const preguntaBinance =
+    contieneAlguna(texto, [
+      "binance",
+      "binans",
+      "binanse",
+      "binnance",
+      "vinas",
+      "usdt",
+      "pagar por binance",
+      "quiero binance",
+      "prefiero binance",
+      "binance id",
+      "id binance",
+      "qr binance",
+      "codigo qr"
+    ]) ||
+    texto === "binance" ||
+    texto === "binans" ||
+    texto === "vinas";
+
+  if (preguntaBinance) {
+    return {
+      intencion: "binance",
+      respuesta: respuestaBinance()
     };
   }
 
@@ -952,117 +658,93 @@ function respuestaDirecta(mensajeOriginal) {
   if (
     contieneAlguna(texto, [
       "pack complementario",
+      "complemento keto",
       "complemento metodo",
       "salsas y postres",
-      "complemento keto",
-      "otro pack",
-      "adicional",
       "upsell",
+      "producto adicional",
+      "otro producto"
     ])
   ) {
-
     return {
       intencion: "upsell",
-      respuesta: respuestaUpsell(),
+      respuesta: respuestaUpsell()
     };
   }
 
   // --------------------------------------------------------
-  // PAGO MÓVIL
+  // INTENCIÓN DE COMPRA
+  // Debe ir antes de precio genérico.
   // --------------------------------------------------------
 
   if (
     contieneAlguna(texto, [
-      "pago movil",
-      "datos pago movil",
-      "datos del pago movil",
-      "numero para pago movil",
-      "telefono para pagar",
-      "cedula para pagar",
-      "banco de venezuela",
-      "codigo 0102",
+      "quiero comprar",
+      "quiero adquirir",
+      "quiero el metodo",
+      "quiero el megapack",
+      "quiero comprar el megapack",
+      "quiero comprar keto",
+      "quiero comprar metodo keto",
+      "me interesa comprar",
+      "como compro",
+      "como comprar",
+      "deseo comprar",
+      "lo quiero",
+      "quiero pagarlo"
     ])
   ) {
-
     return {
-      intencion: "pago_movil",
-      respuesta: respuestaPagoMovil(),
+      intencion: "intencion_compra",
+      respuesta: respuestaCompra()
     };
   }
 
   // --------------------------------------------------------
-  // BINANCE
+  // PRECIO
   // --------------------------------------------------------
 
   if (
     contieneAlguna(texto, [
-      "binance",
-      "usdt",
-      "binance id",
-      "id de binance",
-      "codigo qr",
-      "qr de binance",
-    ])
-  ) {
-
-    return {
-      intencion: "binance",
-      respuesta: respuestaBinance(),
-    };
-  }
-
-  // --------------------------------------------------------
-  // PRECIO / FORMAS DE PAGO
-  // --------------------------------------------------------
-
-  if (
-    contieneAlguna(texto, [
-      "precio",
       "cuanto cuesta",
       "cuanto vale",
-      "valor",
+      "que precio",
+      "precio",
       "costo",
+      "valor",
       "cuanto pago",
-      "como pago",
-      "metodos de pago",
+      "cuanto debo pagar",
       "formas de pago",
-      "donde pago",
+      "metodos de pago"
     ])
   ) {
-
     return {
-      intencion: "precio_pago",
-      respuesta: agregarCierre(
-        respuestaPrecioGeneral(),
-        texto
-      ),
+      intencion: "precio",
+      respuesta: respuestaPrecio()
     };
   }
 
   // --------------------------------------------------------
-  // ENTREGA / DRIVE
+  // CONTENIDO
   // --------------------------------------------------------
 
   if (
     contieneAlguna(texto, [
-      "como lo recibo",
-      "como recibo",
-      "donde lo recibo",
-      "como se entrega",
-      "es digital",
-      "es fisico",
-      "pdf",
-      "google drive",
-      "drive",
-      "enlace",
-      "link",
-      "por whatsapp",
+      "que incluye",
+      "que trae",
+      "que recibo",
+      "contenido",
+      "bonos",
+      "regalos",
+      "material",
+      "que contiene",
+      "que viene",
+      "recetas incluye"
     ])
   ) {
-
     return {
-      intencion: "entrega",
-      respuesta: respuestaEntrega(),
+      intencion: "contenido",
+      respuesta: respuestaContenido()
     };
   }
 
@@ -1077,15 +759,40 @@ function respuestaDirecta(mensajeOriginal) {
       "cuando llega",
       "cuando recibo",
       "en cuanto tiempo",
-      "entrega inmediata",
       "tiempo de entrega",
-      "cuanto hay que esperar",
+      "es inmediato",
+      "entrega inmediata"
     ])
   ) {
-
     return {
       intencion: "tiempo_entrega",
-      respuesta: respuestaTiempoEntrega(),
+      respuesta: respuestaTiempoEntrega()
+    };
+  }
+
+  // --------------------------------------------------------
+  // ENTREGA / FORMATO
+  // --------------------------------------------------------
+
+  if (
+    contieneAlguna(texto, [
+      "como lo recibo",
+      "como recibo",
+      "donde lo recibo",
+      "como se entrega",
+      "es digital",
+      "es fisico",
+      "producto digital",
+      "google drive",
+      "drive",
+      "por whatsapp",
+      "enlace",
+      "link"
+    ])
+  ) {
+    return {
+      intencion: "entrega",
+      respuesta: respuestaEntrega()
     };
   }
 
@@ -1100,17 +807,16 @@ function respuestaDirecta(mensajeOriginal) {
       "se vence",
       "vence",
       "caduca",
-      "cuanto dura el acceso",
+      "cuanto dura",
       "solo 28 dias",
       "despues de 28 dias",
       "acceso permanente",
-      "puedo guardarlo",
+      "puedo guardarlo"
     ])
   ) {
-
     return {
       intencion: "acceso_vida",
-      respuesta: respuestaAccesoVida(),
+      respuesta: respuestaAccesoVida()
     };
   }
 
@@ -1129,18 +835,17 @@ function respuestaDirecta(mensajeOriginal) {
       "puedo empezar",
       "sin experiencia",
       "primera vez",
-      "desde cero",
+      "desde cero"
     ])
   ) {
-
     return {
       intencion: "principiante",
-      respuesta: respuestaPrincipiante(),
+      respuesta: respuestaPrincipiante()
     };
   }
 
   // --------------------------------------------------------
-  // SALUD / PESO
+  // PESO / RESULTADOS
   // --------------------------------------------------------
 
   if (
@@ -1153,70 +858,12 @@ function respuestaDirecta(mensajeOriginal) {
       "resultados",
       "funciona",
       "habitos saludables",
-      "bienestar",
+      "bienestar"
     ])
   ) {
-
     return {
       intencion: "salud_peso",
-      respuesta: respuestaSaludPeso(),
-    };
-  }
-
-  // --------------------------------------------------------
-  // CONTENIDO
-  // --------------------------------------------------------
-
-  if (
-    contieneAlguna(texto, [
-      "que incluye",
-      "que trae",
-      "que recibo",
-      "contenido",
-      "bonos",
-      "regalos",
-      "material",
-      "que viene",
-      "que contiene",
-      "recetas incluye",
-    ])
-  ) {
-
-    return {
-      intencion: "contenido",
-      respuesta: respuestaContenido(),
-    };
-  }
-
-  // --------------------------------------------------------
-  // INTENCIÓN DE COMPRA
-  // --------------------------------------------------------
-
-  if (
-    contieneAlguna(texto, [
-      "quiero comprar",
-      "quiero adquirir",
-      "quiero el metodo",
-      "quiero el producto",
-      "me interesa comprar",
-      "como compro",
-      "como comprar",
-    ])
-  ) {
-
-    const base = [
-
-      `${NEGOCIO.producto} + los 9 regalos digitales tiene un valor de Bs. ${NEGOCIO.precioBolivares.toLocaleString("es-VE")} por Pago Móvil o ${NEGOCIO.precioBinance} por Binance. Todo es 100% digital y se entrega por WhatsApp una vez validado el pago. 💚`,
-
-      `Claro 😊 Puedes adquirir ${NEGOCIO.producto} completo + 9 regalos por Bs. ${NEGOCIO.precioBolivares.toLocaleString("es-VE")} o ${NEGOCIO.precioBinance}. La entrega es digital e inmediata después de validar el comprobante.`,
-    ];
-
-    return {
-      intencion: "intencion_compra",
-      respuesta: agregarCierre(
-        elegirAleatoria(base),
-        texto
-      ),
+      respuesta: respuestaSaludPeso()
     };
   }
 
@@ -1228,10 +875,9 @@ function respuestaDirecta(mensajeOriginal) {
 // ==========================================================
 
 app.get("/", (req, res) => {
-
   return res
     .status(200)
-    .send("Agente de soporte activo ✅");
+    .send("Bot ventas KETO activo ✅");
 });
 
 app.post("/mensaje", async (req, res) => {
@@ -1255,15 +901,15 @@ app.post("/mensaje", async (req, res) => {
     );
 
     if (!textoUsuario) {
-
       return res.json({
         respuesta:
-          "No pude identificar el mensaje 😊 Escríbeme nuevamente tu duda y con gusto te ayudo.",
+          "Estoy aquí para ayudarte 😊 Escríbeme tu duda sobre Método KETO 28D™."
       });
     }
 
-    const textoNormalizado =
-      normalizarTexto(textoUsuario);
+    // ======================================================
+    // 1. PRIMERO BUSCAMOS RESPUESTA DIRECTA
+    // ======================================================
 
     const directa =
       respuestaDirecta(textoUsuario);
@@ -1285,9 +931,13 @@ app.post("/mensaje", async (req, res) => {
       );
 
       return res.json({
-        respuesta: respuestaFinal,
+        respuesta: respuestaFinal
       });
     }
+
+    // ======================================================
+    // 2. SI NO HAY INTENCIÓN DIRECTA, USA OPENAI
+    // ======================================================
 
     console.log(
       "Intención detectada: consulta_abierta"
@@ -1301,27 +951,36 @@ app.post("/mensaje", async (req, res) => {
         temperature: 0.4,
 
         input: [
-
           {
             role: "system",
-            content: SYSTEM_PROMPT,
+            content: [
+              {
+                type: "input_text",
+                text: SYSTEM_PROMPT
+              }
+            ]
           },
-
           {
             role: "user",
-            content: textoUsuario,
-          },
-        ],
+            content: [
+              {
+                type: "input_text",
+                text: textoUsuario
+              }
+            ]
+          }
+        ]
       });
 
     const respuestaIA =
       response.output_text || "";
 
+    // IMPORTANTE:
+    // YA NO AGREGAMOS UN CIERRE DE PAGO AUTOMÁTICAMENTE.
+    // ESTA ERA UNA DE LAS CAUSAS DEL PROBLEMA.
+
     const respuestaFinal =
-      agregarCierre(
-        limpiarRespuesta(respuestaIA),
-        textoNormalizado
-      );
+      limpiarRespuesta(respuestaIA);
 
     console.log(
       "Respuesta generada mediante OpenAI"
@@ -1330,7 +989,7 @@ app.post("/mensaje", async (req, res) => {
     return res.json({
       respuesta:
         respuestaFinal ||
-        "En este momento necesito confirmar ese dato con el equipo para darte una respuesta correcta. 😊",
+        "Con gusto te ayudo 😊 ¿Qué deseas saber sobre Método KETO 28D™?"
     });
 
   } catch (error) {
@@ -1341,13 +1000,14 @@ app.post("/mensaje", async (req, res) => {
       "Error desconocido"
     );
 
-    return res
-      .status(200)
-      .json({
+    // IMPORTANTE:
+    // SI OPENAI FALLA, TAMPOCO MANDAMOS DATOS DE PAGO.
+    // RESPONDEMOS NEUTRALMENTE.
 
-        respuesta:
-          "En este momento no pude procesar tu mensaje. Por favor, inténtalo nuevamente en unos minutos. 😊",
-      });
+    return res.status(200).json({
+      respuesta:
+        "En este momento tuve un pequeño inconveniente para procesar tu mensaje 😊 Inténtalo nuevamente en unos minutos."
+    });
   }
 });
 
